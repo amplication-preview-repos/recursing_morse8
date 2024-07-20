@@ -1,0 +1,78 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Features {
+  id             String                   @id @default(cuid())
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+  name           String?
+  description    String?
+  status         EnumFeaturesStatus?
+  featureType    EnumFeaturesFeatureType?
+  typeField      EnumFeaturesTypeField?
+  relatedRelease String?
+  relatedTask    String?
+}
+
+model Release {
+  id        String                @id @default(cuid())
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+  channels  EnumReleaseChannels[]
+  features  EnumReleaseFeatures[]
+  name      String?
+  date      DateTime?
+}
+
+model Channel {
+  id        String               @id @default(cuid())
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  name      String?
+  platform  EnumChannelPlatform?
+}
+
+model Task {
+  id             String          @id @default(cuid())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  summary        String?
+  description    String?
+  status         EnumTaskStatus?
+  jiraId         String?
+  relatedFeature String?
+}
+
+enum EnumFeaturesStatus {
+  Option1
+}
+
+enum EnumFeaturesFeatureType {
+  Option1
+}
+
+enum EnumFeaturesTypeField {
+  Option1
+}
+
+enum EnumReleaseChannels {
+  Option1
+}
+
+enum EnumReleaseFeatures {
+  Option1
+}
+
+enum EnumChannelPlatform {
+  Option1
+}
+
+enum EnumTaskStatus {
+  Option1
+}
